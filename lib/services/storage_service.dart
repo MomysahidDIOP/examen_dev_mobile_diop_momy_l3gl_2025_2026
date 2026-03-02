@@ -53,9 +53,8 @@ class StorageService {
 
   // Sauvegarder un nouvel utilisateur (indispensable pour le register)
   Future<void> saveUsers(List<User> users) async {
-    final String encodedData = json.encode(
-      users.map((user) => user.toMap()).toList(),
-    );
+    final List<Map<String, dynamic>> usersList = users.map((user) => user.toMap()).toList();
+    final String encodedData = json.encode(usersList);
     await _prefs.setString(_keyUsers, encodedData);
   }
 
@@ -73,4 +72,7 @@ class StorageService {
   Future<void> logout() async {
     await _prefs.remove(_keyCurrentUser);
   }
+
+
+
 }
