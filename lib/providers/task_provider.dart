@@ -6,13 +6,22 @@ class TaskProvider extends ChangeNotifier {
   String? _statusFilter;
   bool _isLoading = false;
 
+
   List<Task> get tasks {
-    List<Task> filtered = _tasks;
+    List<Task> filtered = List.from(_tasks);
+
     if (_statusFilter != null) {
       filtered = filtered.where((t) => t.status == _statusFilter).toList();
     }
-    // Tri par statut (InProgress > Todo > Done) comme demandé
-    filtered.sort((a, b) => a.status.compareTo(b.status));
+
+
+    final order = {'inProgress': 0, 'todo': 1, 'done': 2};
+
+    filtered.sort((a, b) {
+      int statusCompare = (order[a.status] ?? 99).compareTo(order[b.status] ?? 99);
+      return statusCompare;
+    });
+
     return filtered;
   }
 
@@ -22,6 +31,7 @@ class TaskProvider extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     await Future.delayed(const Duration(milliseconds: 500));
+
     _isLoading = false;
     notifyListeners();
   }
@@ -30,4 +40,6 @@ class TaskProvider extends ChangeNotifier {
     _statusFilter = status;
     notifyListeners();
   }
+
+// CRUD
 }

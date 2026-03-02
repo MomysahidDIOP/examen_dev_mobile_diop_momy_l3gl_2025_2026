@@ -17,7 +17,7 @@ class ProjectProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      // Simulation de récupération (à lier avec StorageService plus tard)
+
       await Future.delayed(const Duration(milliseconds: 500));
     } finally {
       _isLoading = false;
