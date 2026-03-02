@@ -36,7 +36,7 @@ class CustomTextField extends StatelessWidget
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
         ),
-        // Etat  quand le champ n'est pas selectionne
+        //Etat  quand le champ n'est pas selectionne
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: Colors.grey.shade300),
