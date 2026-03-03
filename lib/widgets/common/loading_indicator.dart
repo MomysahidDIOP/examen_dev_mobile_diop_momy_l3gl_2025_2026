@@ -6,8 +6,8 @@ class LoadingIndicator extends StatelessWidget {
 
   const LoadingIndicator({
     super.key,
-    this.size = 30.0, // Taille par défaut
-    this.color,       // Couleur optionnelle (prendra le thème par défaut sinon)
+    this.size = 30.0,
+    this.color,
   });
 
   @override
