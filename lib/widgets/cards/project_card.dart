@@ -19,28 +19,37 @@ class ProjectCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // On transforme le String hexadécimal (#FF0000) en couleur Flutter
-    // Utilise project.color (le String) au lieu de juste color
-    // Utilise project.color (le String) au lieu de juste color
-    final String colorHex = project.color.toString().replaceFirst('#', '0xff');
-    final Color projectColor = Color(int.parse(colorHex));
+
+    String codeCouleur = project.color.toString().replaceAll('#', '');
+
+
+    if (codeCouleur.length == 6) {
+      codeCouleur = 'FF$codeCouleur';
+    } else if (codeCouleur.length != 8) {
+      codeCouleur = 'FF9E9E9E';
+    }
+
+
+    final Color couleurProjet = Color(int.parse(codeCouleur, radix: 16));
+
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: ListTile(
         onTap: onTap,
-        // 1. Pastille de couleur (Exigence Page 8)
+
         leading: Container(
-          width: 5,
+          width: 8,
           height: 40,
           decoration: BoxDecoration(
-            color: projectColor,
-            borderRadius: BorderRadius.circular(10),
+            color: couleurProjet,
+            borderRadius: BorderRadius.circular(4),
           ),
         ),
+
         title: Text(project.name, style: const TextStyle(fontWeight: FontWeight.bold)),
         subtitle: Text(project.description, maxLines: 1, overflow: TextOverflow.ellipsis),
-        // 2. Menu contextuel (Exigence Page 8)
+
         trailing: PopupMenuButton<String>(
           onSelected: (value) {
             if (value == 'edit') onEdit();
