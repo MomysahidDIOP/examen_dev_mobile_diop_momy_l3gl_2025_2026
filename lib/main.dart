@@ -1,4 +1,5 @@
 import 'package:examen_dev_mobile_diop_momy_l3gl_2025_2026/screens/auth/register_screen.dart';
+import 'package:examen_dev_mobile_diop_momy_l3gl_2025_2026/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'core/themes/app_theme.dart';
@@ -45,7 +46,7 @@ class SunuTaskApp extends StatelessWidget {
       routes: {
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
-       // '/home': (context) => const HomeScreen(),
+        '/home': (context) => const HomeScreen(),
       },
     );
   }
