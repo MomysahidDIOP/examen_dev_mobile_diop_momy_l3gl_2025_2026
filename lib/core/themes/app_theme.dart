@@ -10,7 +10,7 @@ import 'package:examen_dev_mobile_diop_momy_l3gl_2025_2026/core/constants/app_co
 
 class AppTheme{
   AppTheme._(); //constructeur prive pour empecher la creation de l'objet
-  //===============configuration du theme claire=============
+  //===============configuration du themes claire=============
   static ThemeData get lightTheme{
     return ThemeData(
       useMaterial3: true,
@@ -85,7 +85,7 @@ class AppTheme{
       )
     );
   }
-//===============configuration du theme Sombre=========
+//===============configuration du themes Sombre=========
   static ThemeData get darkTheme{
     return ThemeData(
         useMaterial3: true,

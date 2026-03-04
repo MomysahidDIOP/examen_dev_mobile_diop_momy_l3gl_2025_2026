@@ -9,7 +9,7 @@ import 'package:examen_dev_mobile_diop_momy_l3gl_2025_2026/services/storage_serv
 import 'package:provider/provider.dart';
 import 'package:examen_dev_mobile_diop_momy_l3gl_2025_2026/providers/app_provider.dart';
 import 'package:examen_dev_mobile_diop_momy_l3gl_2025_2026/providers/auth_provider.dart';
-//on voit le logo
+
 
 class SplashScreen extends StatefulWidget{
   const SplashScreen({super.key});
@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.dispose();
   }
   void _startAnimations(){
-    Future.delayed(Duration(microseconds: 100), (){
+    Future.delayed(Duration(milliseconds: 100), (){
 
       if(mounted) {
         setState(() => _showLogo = true);
@@ -47,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     });
 
-    Future.delayed(Duration(microseconds: 1500), (){
+    Future.delayed(Duration(milliseconds: 1500), (){
       if(mounted) {
         setState(() => _showText = true);
       }
@@ -62,15 +62,14 @@ class _SplashScreenState extends State<SplashScreen> {
   void _navigateToNextScreen() {
     if (!mounted) return;
 
-
     final appProvider = context.read<AppProvider>();
     final authProvider = context.read<AuthProvider>();
 
     if (!appProvider.isOnboardingComplete) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const OnboardingScreen()));
     } else if (!authProvider.isAuthenticated) {
-      // On ira vers le LoginScreen (qu'on va créer demain)
-      // Pour l'instant, on peut laisser un print ou rediriger
+
+      Navigator.pushReplacementNamed(context, '/login');
     } else {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
     }
@@ -102,11 +101,11 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget _buidLogo(){
     return AnimatedOpacity(// Rendu fondu :Demarrage Lent puis accelaration progressive
       opacity: _showLogo ? 1: 0,
-      duration: Duration(microseconds: 500),
+      duration: Duration(milliseconds: 500),
       curve: Curves.easeIn,
       child: AnimatedScale(//Demarrage rapide puis deceleration
         scale: _showLogo ? 1: 0,
-        duration: Duration(microseconds: 500),
+        duration: Duration(milliseconds: 500),
         curve: Curves.easeOut,
         child: Container(
           width: 124,
@@ -136,7 +135,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget _buidAppName(){
     return AnimatedOpacity(
       opacity: _showText ? 1: 0,
-      duration: Duration(microseconds: 500),
+      duration: Duration(milliseconds: 500),
       child: Text(
        AppStrings.appName,
         style: TextStyle(
@@ -152,7 +151,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget _buidAppSlogan(){
     return AnimatedOpacity(
       opacity: _showText ? 1: 0,
-      duration: Duration(microseconds: 500),
+      duration: Duration(milliseconds: 500),
       child: Text(
         AppStrings.appSlogan,
         style: TextStyle(
@@ -167,7 +166,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget _buidLoadingIndicator(){
     return AnimatedOpacity(
       opacity: _showText ? 1: 0,
-      duration: Duration(microseconds: 500),
+      duration: Duration(milliseconds: 500),
       child: SizedBox(
         width: 24,
         height: 24,

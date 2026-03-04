@@ -19,19 +19,18 @@ class ProjectCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 1. Récupérer la valeur entière de la couleur et la transformer en String hexadécimale
+    String codeCouleur = project.color.value.toRadixString(16).toUpperCase();
 
-    String codeCouleur = project.color.toString().replaceAll('#', '');
-
-
+    // 2. S'assurer que le format est correct (ARGB)
     if (codeCouleur.length == 6) {
       codeCouleur = 'FF$codeCouleur';
     } else if (codeCouleur.length != 8) {
-      codeCouleur = 'FF9E9E9E';
+      codeCouleur = 'FF9E9E9E'; // Couleur grise par défaut si erreur
     }
 
-
+    // 3. Créer l'objet Color final
     final Color couleurProjet = Color(int.parse(codeCouleur, radix: 16));
-
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
