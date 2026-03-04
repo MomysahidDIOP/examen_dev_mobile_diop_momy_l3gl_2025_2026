@@ -4,7 +4,8 @@ import 'package:examen_dev_mobile_diop_momy_l3gl_2025_2026/core/constants/app_st
 import 'package:examen_dev_mobile_diop_momy_l3gl_2025_2026/models/OnboardingItem.dart';
 import 'package:examen_dev_mobile_diop_momy_l3gl_2025_2026/screens/home/home_screen.dart';
 import 'package:examen_dev_mobile_diop_momy_l3gl_2025_2026/services/storage_service.dart';
-
+import 'package:provider/provider.dart';
+import 'package:examen_dev_mobile_diop_momy_l3gl_2025_2026/providers/app_provider.dart';
 
 class OnboardingScreen extends StatefulWidget{
   const OnboardingScreen({super.key});
@@ -47,14 +48,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
 
 
-  // Fonction appelee  pour quitter l'onboarding définitivement
-  void _finishOnboarding() {
-    // Correction : on passe "true" pour dire que c'est fini
-    StorageService.instance.setOnboardingComplete(true);
+  
+  // Fonction appelée pour quitter l'onboarding définitivement
+  Future<void> _finishOnboarding() async {
+    // 1. On utilise le Provider au lieu du StorageService directement
+    final appProvider = Provider.of<AppProvider>(context, listen: false);
+    // 2. On appelle la méthode qui sauvegarde ET notifie l'app
+    await appProvider.completeOnboarding();
 
-    // On change d'écran vers le LoginScreen (comme demandé dans la Partie 3.3 du PDF)
-    // Au lieu de HomeScreen, on doit maintenant aller vers LoginScreen
-    Navigator.pushReplacementNamed(context, '/login');
+    // 3. On change d'écran vers le LoginScreen
+    if (mounted) {
+      Navigator.pushReplacementNamed(context, '/login');
+    }
   }
 
   @override
