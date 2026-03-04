@@ -29,7 +29,7 @@ class ProjectCard extends StatelessWidget {
       codeCouleur = 'FF9E9E9E'; // Couleur grise par défaut si erreur
     }
 
-    // 3. Créer l'objet Color final
+    // on cree l'objet Color final
     final Color couleurProjet = Color(int.parse(codeCouleur, radix: 16));
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

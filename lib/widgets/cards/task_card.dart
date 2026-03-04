@@ -67,7 +67,7 @@ class TaskCard extends StatelessWidget {
             ),
           ],
         ),
-        // Indicateur de priorité (Exigence Page 8)
+        // Indicateur de priorité
         trailing: Icon(Icons.flag, color: couleurPriorite),
       ),
     );

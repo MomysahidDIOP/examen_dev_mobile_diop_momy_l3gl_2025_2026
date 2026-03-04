@@ -1,3 +1,4 @@
+import 'package:examen_dev_mobile_diop_momy_l3gl_2025_2026/screens/auth/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'core/themes/app_theme.dart';
@@ -8,10 +9,10 @@ import 'providers/task_provider.dart';
 import 'screens/splash/splash_screen.dart';
 import 'screens/auth/login_screen.dart';
 void main() async {
-  // 1. Indispensable pour SharedPreferences au démarrage
+
   WidgetsFlutterBinding.ensureInitialized();
 
-  // 2. On initialise le provider principal (qui initialise le StorageService)
+  // On initialise le provider principal (qui initialise le StorageService)
   final appProvider = AppProvider();
   await appProvider.init();
 
@@ -43,7 +44,8 @@ class SunuTaskApp extends StatelessWidget {
       // On définit les routes pour la navigation
       routes: {
         '/login': (context) => const LoginScreen(),
-        '/register': (context) => const Scaffold(body: Center(child: Text("Page Inscription à venir"))),
+        '/register': (context) => const RegisterScreen(),
+       // '/home': (context) => const HomeScreen(),
       },
     );
   }
