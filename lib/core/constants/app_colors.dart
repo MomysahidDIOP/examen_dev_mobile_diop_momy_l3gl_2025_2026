@@ -1,6 +1,5 @@
+import 'package:flutter/material.dart';
 
-
-import 'package:flutter/animation.dart';
 
 /**
  *Pallette de la couleur de l'application sunuTask
