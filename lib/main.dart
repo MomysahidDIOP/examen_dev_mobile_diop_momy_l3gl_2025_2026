@@ -9,20 +9,21 @@ import 'providers/project_provider.dart';
 import 'providers/task_provider.dart';
 import 'screens/splash/splash_screen.dart';
 import 'screens/auth/login_screen.dart';
+
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
-
-  // On initialise le provider principal (qui initialise le StorageService)
   final appProvider = AppProvider();
   await appProvider.init();
+  final authProvider = AuthProvider();
+  await authProvider.init(); // ← AJOUTÉ
 
   runApp(
-    // 3. On enveloppe l'app avec tous les Providers (MultiProvider)
     MultiProvider(
       providers: [
+        // .value car ces providers sont déjà créés et initialisés ci-dessus
         ChangeNotifierProvider.value(value: appProvider),
-        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider.value(value: authProvider),
+        // create car ces providers n'ont pas besoin d'init() au démarrage
         ChangeNotifierProvider(create: (_) => ProjectProvider()),
         ChangeNotifierProvider(create: (_) => TaskProvider()),
       ],
@@ -39,10 +40,9 @@ class SunuTaskApp extends StatelessWidget {
     return MaterialApp(
       title: 'SunuTask',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme, // Utilise ton thème clair
-      darkTheme: AppTheme.darkTheme, // Utilise ton thème sombre
-      home: const SplashScreen(), // Démarre sur le Splash
-      // On définit les routes pour la navigation
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      home: const SplashScreen(),
       routes: {
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
