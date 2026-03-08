@@ -86,7 +86,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 CustomTextField(
                   controller: _nameController,
                   label: "Nom complet",
-                  hint: "Ex: Amina Diop",
+                  hint: "Ex: Momy Diop",
                   prefixIcon: Icons.person_outline,
                   validator: (v) => (v == null || v.length < 2) ? "Nom trop court (min 2)" : null,
                 ),
@@ -109,7 +109,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   label: "Mot de passe",
                   hint: "******",
                   prefixIcon: Icons.lock_outline,
-                  isPassword: true,
+                  obscureText: true, // ← isPassword: true → obscureText: true
                   validator: (v) => (v == null || v.length < 6) ? "Minimum 6 caractères" : null,
                 ),
                 const SizedBox(height: 16),
@@ -120,7 +120,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   label: "Confirmer",
                   hint: "******",
                   prefixIcon: Icons.lock_clock_outlined,
-                  isPassword: true,
+                  obscureText: true, // ← isPassword: true → obscureText: true
                   validator: (v) => (v != _passwordController.text) ? "Les mots de passe diffèrent" : null,
                 ),
                 const SizedBox(height: 32),
