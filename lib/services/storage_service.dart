@@ -124,12 +124,12 @@ class StorageService {
   // TaskProvider.loadTasks() filtrera ensuite par projectId
   List<Task> getTasks() {
     final String? tasksJson = _prefs.getString(_keyTasks);
-    if (tasksJson == null) return []; // Pas encore de tâches = liste vide
+    if (tasksJson == null) return [];
     final List<dynamic> decodedData = json.decode(tasksJson);
     return decodedData.map((item) => Task.fromMap(item)).toList();
   }
 
-  // Sauvegarde la liste complète des tâches
+  // Sauvegarde la liste complète des taches
   Future<void> saveTasks(List<Task> tasks) async {
     final String encodedData =
     json.encode(tasks.map((t) => t.toMap()).toList());

@@ -162,10 +162,7 @@ class AuthProvider extends ChangeNotifier {
   // ============================================================
   // MÉTHODE updateProfile()
   // Permet à l'utilisateur de changer son nom ou son email
-
   // ============================================================
-
-
   Future<void> updateProfile({String? name, String? email}) async {
 
     // Si personne n'est connecté, on ne fait rien
