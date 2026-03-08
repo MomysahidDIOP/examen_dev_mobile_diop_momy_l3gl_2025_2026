@@ -41,7 +41,6 @@ class StorageService {
     await _prefs.setBool(_keyOnboardingComplete, value);
   }
 
-  // --- AUTHENTIFICATION (Section 1.2 du PDF) ---
 
   // Récupérer la liste des utilisateurs (indispensable pour le login)
   List<User> getUsers() {
