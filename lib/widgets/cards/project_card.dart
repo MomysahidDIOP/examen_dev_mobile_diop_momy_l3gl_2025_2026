@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../models/Project.dart';
+import '../../core/constants/app_colors.dart'; // ← AJOUTER
 
 class ProjectCard extends StatelessWidget {
   final Project project;
@@ -19,24 +20,17 @@ class ProjectCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 1. Récupérer la valeur entière de la couleur et la transformer en String hexadécimale
-    String codeCouleur = project.color.value.toRadixString(16).toUpperCase();
 
-    // 2. S'assurer que le format est correct (ARGB)
-    if (codeCouleur.length == 6) {
-      codeCouleur = 'FF$codeCouleur';
-    } else if (codeCouleur.length != 8) {
-      codeCouleur = 'FF9E9E9E'; // Couleur grise par défaut si erreur
-    }
 
-    // on cree l'objet Color final
-    final Color couleurProjet = Color(int.parse(codeCouleur, radix: 16));
+    final Color couleurProjet = project.color;
+
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: ListTile(
         onTap: onTap,
 
+        //Pastille de couleur du projet
         leading: Container(
           width: 8,
           height: 40,
@@ -46,8 +40,29 @@ class ProjectCard extends StatelessWidget {
           ),
         ),
 
-        title: Text(project.name, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text(project.description, maxLines: 1, overflow: TextOverflow.ellipsis),
+        title: Text(
+          project.name,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+
+        //affiche description ET nombre de tâches
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              project.description,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            Text(
+              '$taskCount tâche${taskCount > 1 ? "s" : ""}',
+              style: const TextStyle(
+                color: AppColors.textSecondary,
+                fontSize: 12,
+              ),
+            ),
+          ],
+        ),
 
         trailing: PopupMenuButton<String>(
           onSelected: (value) {
@@ -56,7 +71,13 @@ class ProjectCard extends StatelessWidget {
           },
           itemBuilder: (context) => [
             const PopupMenuItem(value: 'edit', child: Text('Modifier')),
-            const PopupMenuItem(value: 'delete', child: Text('Supprimer', style: TextStyle(color: Colors.red))),
+            const PopupMenuItem(
+              value: 'delete',
+              child: Text(
+                'Supprimer',
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
           ],
         ),
       ),

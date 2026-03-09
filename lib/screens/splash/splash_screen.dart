@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void dispose() {
-    //Important: annuler la timer pour eviter les fuites de memoire
+    // annuler la timer pour eviter les fuites de memoire
     _timer?.cancel();
     super.dispose();
   }
@@ -125,7 +125,7 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Icon(
             Icons.task_alt,
             size: 65,
-            color: AppColors.white..withAlpha(200),
+            color: AppColors.white.withAlpha(200),
           ),
         ),
       ),
