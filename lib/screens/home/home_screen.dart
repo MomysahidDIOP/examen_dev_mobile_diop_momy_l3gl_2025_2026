@@ -1,3 +1,4 @@
+import 'package:examen_dev_mobile_diop_momy_l3gl_2025_2026/screens/projects/project_form_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
@@ -37,10 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // Les titres correspondants à chaque onglet
   final List<String> _titles = [
-    AppStrings.home,      // "Accueil"
-    AppStrings.projects,  // "Projets"
-    AppStrings.tasks,     // "Tâches"
-    AppStrings.profile,   // "Profil"
+    AppStrings.home,
+    AppStrings.projects,
+    AppStrings.tasks,
+    AppStrings.profile,
   ];
 
   @override
@@ -216,16 +217,14 @@ class _HomeScreenState extends State<HomeScreen> {
       // Pour créer un nouveau projet
       // ============================================================
       floatingActionButton: Visibility(
-        // Visible seulement sur onglet 0 (Dashboard) et 1 (Projets)
         visible: _currentIndex == 0 || _currentIndex == 1,
         child: FloatingActionButton(
           backgroundColor: AppColors.primary,
           onPressed: () {
-            // Navigation vers le formulaire de création de projet
-            // On l'implémentera dans la Partie 5
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Créer un projet - Partie 5'),
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const ProjectFormScreen(),
               ),
             );
           },
