@@ -2,28 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:examen_dev_mobile_diop_momy_l3gl_2025_2026/core/constants/app_colors.dart';
 import 'package:examen_dev_mobile_diop_momy_l3gl_2025_2026/core/constants/app_strings.dart';
 import 'package:examen_dev_mobile_diop_momy_l3gl_2025_2026/models/OnboardingItem.dart';
-import 'package:examen_dev_mobile_diop_momy_l3gl_2025_2026/screens/home/home_screen.dart';
-import 'package:examen_dev_mobile_diop_momy_l3gl_2025_2026/services/storage_service.dart';
 import 'package:provider/provider.dart';
 import 'package:examen_dev_mobile_diop_momy_l3gl_2025_2026/providers/app_provider.dart';
 
-class OnboardingScreen extends StatefulWidget{
+// OnboardingScreen affiche 3 pages de présentation de l'application
+//on le met en StatefulWidget car il doit gérer :
+//   - _currentPage : l'index de la page affichée
+//   - _pageController : le controleur de défilement
+class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
+
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
-
-
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-  // Le PageController permet de contrôler le défilement des pages (aller à la suivante/précédente)
-  final PageController _pageController = PageController();
 
-  // Variable pour suivre l'index de la page affichée (0, 1 ou 2)
+  final PageController _pageController = PageController();
   int _currentPage = 0;
 
-  // Liste des données à afficher sur chaque page
-
+  // Les données des 3 pages d'onboarding
   final List<OnboardingItem> _items = [
     OnboardingItem(
       title: AppStrings.onboardingTitle1,
@@ -45,18 +43,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     ),
   ];
 
+  // Libérer le PageController quand l'écran est détruit
   @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
-
-  
-  // Fonction appelée pour quitter l'onboarding définitivement
+  // Appelée quand l'utilisateur clique sur "Commencer" ou "Passer"
+  // Elle sauvegarde que l'onboarding est terminé et navigue vers Login
   Future<void> _finishOnboarding() async {
-    // 1. On utilise le Provider au lieu du StorageService directement
     final appProvider = Provider.of<AppProvider>(context, listen: false);
-    // 2. On appelle la méthode qui sauvegarde ET notifie l'app
     await appProvider.completeOnboarding();
-
-    // 3. On change d'écran vers le LoginScreen
     if (mounted) {
       Navigator.pushReplacementNamed(context, '/login');
     }
@@ -66,11 +64,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      // SafeArea évite que le contenu touche l'enco ou la barre de batterie
       body: SafeArea(
         child: Column(
           children: [
-            // Section du haut : Bouton Skip (Passer)
+
+            // Bouton "Passer" en haut à droite
             Align(
               alignment: Alignment.topRight,
               child: Padding(
@@ -88,12 +86,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
 
-            //  Le contenu défilant
-            // Expanded permet au PageView de prendre toute la place disponible
+            // Contenu défilant des 3 pages
             Expanded(
               child: PageView.builder(
                 controller: _pageController,
-                // On met a jour l'index quand on change de page
                 onPageChanged: (index) => setState(() => _currentPage = index),
                 itemCount: _items.length,
                 itemBuilder: (context, index) {
@@ -129,25 +125,31 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
 
-            // Section du bas : Navigation (Boutons et points)
+            // Barre de navigation en bas : Précédent | Points | Suivant
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Affiche "Précédent" seulement si on n'est pas sur la première page
-                  if (_currentPage > 0)
-                    TextButton(
+
+                  // Visibility au lieu de if/else
+                  // maintainSize : garde l'espace même quand le bouton est caché
+                  // Comme ça le layout ne "saute" pas quand le bouton apparaît/disparaît
+                  Visibility(
+                    visible: _currentPage > 0,
+                    maintainSize: true,
+                    maintainState: true,
+                    maintainAnimation: true,
+                    child: TextButton(
                       onPressed: () => _pageController.previousPage(
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.easeInOut,
                       ),
                       child: const Text(AppStrings.previous),
-                    )
-                  else
-                    const SizedBox(width: 80), // Espace vide pour garder l'alignement
+                    ),
+                  ),
 
-                  // Les petits points indicateurs de page
+                  // Points indicateurs de page
                   Row(
                     children: List.generate(
                       _items.length,
@@ -155,7 +157,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   ),
 
-                  // Bouton Suivant (ou Commencer sur la derniere page)
+                  // Bouton Suivant / Commencer
                   ElevatedButton(
                     onPressed: () {
                       if (_currentPage == _items.length - 1) {
@@ -189,13 +191,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  // Fonction pour construire un point indicateur
+  // Construit un point indicateur animé
   Widget _buildDot(int index) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       margin: const EdgeInsets.only(right: 8),
       height: 8,
-      // Ils devient plus large
+      // Le point actif est plus large
       width: _currentPage == index ? 24 : 8,
       decoration: BoxDecoration(
         color: _currentPage == index ? AppColors.primary : AppColors.border,
@@ -204,4 +206,3 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 }
-
