@@ -10,13 +10,14 @@ import '../../widgets/cards/task_card.dart';
 import '../tasks/task_form_screen.dart';
 import 'project_form_screen.dart';
 
-// ProjectDetailScreen affiche les détails d'un projet ET la liste de ses tâches.
-// On y accède en cliquant sur une ProjectCard dans ProjectsTab.
-class ProjectDetailScreen extends StatefulWidget {
-  // Le projet à afficher (passé en paramètre depuis ProjectsTab)
-  final Project project;
+// ProjectDetailScreen affiche les détails d'un projet ET la liste de ses taches.
 
-  const ProjectDetailScreen({super.key, required this.project});
+class ProjectDetailScreen extends StatefulWidget {
+  final Project project;
+  const ProjectDetailScreen({
+    super.key,
+    required this.project
+  });
 
   @override
   State<ProjectDetailScreen> createState() => _ProjectDetailScreenState();
@@ -27,7 +28,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
   @override
   void initState() {
     super.initState();
-    // Charger les tâches de ce projet au démarrage de l'écran
+    // Charger les taches de ce projet au démarrage de l'écran
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<TaskProvider>().loadTasks(widget.project.id);
     });
@@ -50,7 +51,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
             onPressed: () => Navigator.pop(context, false),
             child: const Text(AppStrings.cancel),
           ),
-          // Bouton Supprimer (en rouge)
+          // Bouton Supprimer
           TextButton(
             onPressed: () => Navigator.pop(context, true),
             child: const Text(
@@ -67,7 +68,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
       final taskProvider = context.read<TaskProvider>();
       final projectProvider = context.read<ProjectProvider>();
 
-      // Supprimer toutes les tâches du projet d'abord
+      // d'abord on Supprime toutes les tâches du projet
       final tasks = taskProvider.tasks;
       for (final task in tasks) {
         await taskProvider.deleteTask(task.id);
@@ -120,7 +121,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
         children: [
 
           // ============================================================
-          // EN-TÊTE COLORÉ avec le nom et la description du projet
+          // EN-TETE COLORE avec le nom et la description du projet
           // ============================================================
           Container(
             width: double.infinity,
