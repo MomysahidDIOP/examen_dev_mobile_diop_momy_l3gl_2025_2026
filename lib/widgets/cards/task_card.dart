@@ -59,7 +59,7 @@ class TaskCard extends StatelessWidget {
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+           children: [
             Text(
               task.description,
               maxLines: 1,
