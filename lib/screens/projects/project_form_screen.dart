@@ -11,7 +11,7 @@ import '../../widgets/common/custom_text_field.dart';
 import '../../widgets/cards/project_card.dart';
 
 // ProjectFormScreen  cet page sert à la FOIS pour créer ET modifier un projet.
-// Comment on sait si c'est création ou modification ?
+
 //   Si project == null  : c'est une CRÉATION
 //   Si project != null  : c'est une MODIFICATION (les champs sont pré-remplis)
 class ProjectFormScreen extends StatefulWidget {
