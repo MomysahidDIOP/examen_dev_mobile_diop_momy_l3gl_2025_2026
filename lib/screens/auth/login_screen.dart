@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     // context.watch : écouter les changements du provider
-    // quand isLoading change → le widget se reconstruit
+    // quand isLoading change le widget se reconstruit
     final isLoading = context.watch<AuthProvider>().isLoading;
 
     return Scaffold(
@@ -99,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value == null || value.isEmpty) return "Email requis";
-                    // Vérifier @ ET . comme demandé par le prof
+
                     if (!value.contains('@') || !value.contains('.')) {
                       return "Email invalide";
                     }
