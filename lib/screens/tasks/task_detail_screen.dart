@@ -160,8 +160,8 @@ class TaskDetailScreen extends StatelessWidget {
               Text(
                 task.description,
                 style: const TextStyle(
-                  color: AppColors.textSecondary,
-                  fontSize: 14,
+                  color: AppColors.textPrimary,
+                  fontSize: 16,
                 ),
               ),
               const SizedBox(height: 24),
