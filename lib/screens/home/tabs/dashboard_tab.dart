@@ -47,6 +47,7 @@ class DashboardTab extends StatelessWidget {
           onRefresh: () async {
             if (user != null) {
               await projectProvider.loadProjects(user.id);
+
             }
           },
           child: SingleChildScrollView(
@@ -142,8 +143,9 @@ class DashboardTab extends StatelessWidget {
                 const SizedBox(height: 12),
 
                 // État vide
-                if (projects.isEmpty)
-                  const Center(
+                Visibility(
+                  visible: projects.isEmpty,
+                  child: const Center(
                     child: Padding(
                       padding: EdgeInsets.all(32),
                       child: Text(
@@ -152,26 +154,34 @@ class DashboardTab extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                     ),
-                  )
-                else
-                // On affiche seulement les 3 premiers projets
-                  ...projects.take(3).map(
-                        (project) => ProjectCard(
-                      project: project,
-                      taskCount: 0,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) =>
-                                ProjectDetailScreen(project: project),
-                          ),
-                        );
-                      },
-                      onEdit: () {},
-                      onDelete: () {},
-                    ),
                   ),
+                ),
+                Visibility(
+                  visible: projects.isNotEmpty,
+                  child: Column(
+                    children: projects.take(3).map((project) {
+                      // CALCUL DYNAMIQUE DU NOMBRE DE TÂCHES
+                      final int realTaskCount = taskProvider.tasks
+                          .where((t) => t.projectId == project.id)
+                          .length;
+
+                      return ProjectCard(
+                        project: project,
+                        taskCount: realTaskCount, // On passe la vraie valeur calculée
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => ProjectDetailScreen(project: project),
+                            ),
+                          );
+                        },
+                        onEdit: () {},
+                        onDelete: () {},
+                      );
+                    }).toList(),
+                  ),
+                ),
               ],
             ),
           ),
