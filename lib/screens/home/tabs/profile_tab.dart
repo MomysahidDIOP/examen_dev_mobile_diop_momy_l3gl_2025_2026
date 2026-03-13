@@ -21,8 +21,8 @@ class ProfileTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = context.watch<AuthProvider>().currentUser;
-    final projectCount = context.read<ProjectProvider>().projectCount;
-    final taskCount = context.read<TaskProvider>().tasks.length;
+    final projectCount = context.watch<ProjectProvider>().projectCount;
+    final taskCount = context.watch<TaskProvider>().tasks.length;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
