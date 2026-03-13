@@ -27,7 +27,7 @@ class DashboardTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = context.read<AuthProvider>().currentUser;
+    final user = context.watch<AuthProvider>().currentUser;
 
     // ListenableBuilder écoute ProjectProvider ET TaskProvider
     // Si l'un des deux change → l'UI se reconstruit
