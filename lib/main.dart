@@ -15,7 +15,7 @@ void main() async {
   final appProvider = AppProvider();
   await appProvider.init();
   final authProvider = AuthProvider();
-  await authProvider.init(); // ← AJOUTÉ
+  await authProvider.init();
 
   runApp(
     MultiProvider(
